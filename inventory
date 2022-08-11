@@ -14,7 +14,7 @@ all:
           ipaserver_realm: "{{ domain | upper}}"
           ipaserver_setup_dns: yes
           ipaserver_setup_adtrust: yes
-          ipaserver_reverse_zones: "160.168.192.in-addr.arpa"
+          ipaserver_reverse_zones: "1.168.192.in-addr.arpa"
           ipaserver_allow_zone_overlap: yes
           ipaserver_no_forwarders: yes
           ipaserver_no_dnssec_validation: yes
@@ -67,25 +67,25 @@ all:
       - { idm_name: sbronte, idm_first: Sammy, idm_last: Bronte, id: 10003 }
     user_password: 'Redhat123!' # test user password
     idm_admins: # IdM admins name
-      - { idm_name: miker_idm, idm_first: Mike, idm_last: Ralph }
-      - { idm_name: amyra_idm, idm_first: Amy, idm_last: Farley }
+      - { idm_name: johnd_idm, idm_first: John, idm_last: Doe }
+      - { idm_name: janed_idm, idm_first: Jane, idm_last: Doe }
 ## IdM Configuration
     idm_short: "web"
     host_group: "ipaclients"
 ## AD Info
     ad_password: "{{ admin_password }}" # AD administrator password
     ad_domain: 'example.com' # AD domain, usually the root of your IdM
-    ad_ip: '192.168.160.5' # AD IP
+    ad_ip: '192.168.1.5' # AD IP
     ad_netbios: "EXAMPLE"
     idm_pri: "idm.{{ domain }}"
-    idm_DNS1: '192.168.160.52' # primary IdM IP address
+    idm_DNS1: '192.168.1.52' # primary IdM IP address
 ### The below lines are not needed if you are only running a single IdM server.    
     idm_rep: "rep.{{ domain }}"
-    idm_DNS2: '192.168.160.53' # replica IdM IP address
+    idm_DNS2: '192.168.1.53' # replica IdM IP address
 ## AD Enterprise User/Group Creation
     ad_idm_admins: # AD enterprise admin name, needed for AD Trust creation
-      - { ad_name: miker_ad, ad_first: Mike, ad_last: Ralph }
-      - { ad_name: amyra_ad, ad_first: Amy, ad_last: Farley }
+      - { ad_name: johnd_ad, ad_first: John, ad_last: Doe }
+      - { ad_name: janed_ad, ad_first: Jane, ad_last: Doe }
     ad_grp_users: ad-idm-users
     ad_grp_admins: ad-idm-admins
     ad_idm_users: # Test users
@@ -94,12 +94,12 @@ all:
       - { ad_name: aduser3, ad_first: AD, ad_last: User3 }
     ad_idm_password: "Redhat123!"
 ## Satellite Info
-    sat_ip: '192.168.2.10' # Satellite IP
-    satellite: 'sat.bhaile.quaint-reasons.com' # Satellite fqdn
-    satKey7: 'RHEL7p-LAB' # Activation key for RHEL 7 servers
-    satKey8: 'RHEL8p-LAB' # Activation key for RHEL 8 servers
-    satKey9: 'RHEL9p-LAB' # Activation key for RHEL 9 servers
+    sat_ip: '' # Satellite IP
+    satellite: '' # Satellite fqdn
+    satKey7: '' # Activation key for RHEL 7 servers
+    satKey8: '' # Activation key for RHEL 8 servers
+    satKey9: '' # Activation key for RHEL 9 servers
     satCDN_user: '' # customer portal account username if using the CDN to register and update the servers
     satCDN_passwd: '' # customer portal account pasword if using the CDN to register and update the servers
 ## Global Info
-    admin_password: 'C0pper_99' # Admin password used for all applications
+    admin_password: '' # Admin password used for all applications
