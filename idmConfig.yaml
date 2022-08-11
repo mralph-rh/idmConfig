@@ -1,0 +1,51 @@
+---
+# Please read the README.md file
+- name: Sets up the AD trust.
+  hosts: ipaserver
+  gather_facts: false
+  become: True
+  roles:
+  - role: idm-dns_ad_setup
+  tags: adtrust
+- name: Create IdM users
+  hosts: ipaserver
+  gather_facts: false
+  become: True
+  roles:
+  - role: idm-users
+  tags: idmUsers
+- name: Create external group for AD Users/Groups
+  hosts: ipaserver
+  gather_facts: false
+  become: True
+  roles:
+  - role: idm-groups
+  tags: idmGrps
+- name: Create client host group
+  hosts: ipaserver
+  gather_facts: false
+  become: false
+  roles:
+  - role: idm-hostgroup
+  tags: hostGrp
+- name: Create HBAC Rules
+  hosts: ipaserver
+  gather_facts: false
+  become: False
+  roles:
+  - role: idm-hbac
+  tags: hbac
+- name: Enable sudo on clients
+  hosts: ipaclients
+  gather_facts: false
+  become: true
+  roles:
+  - role: sudo-sssd
+  tags: sudo
+- name: Create IdM SUDO rules
+  hosts: ipaserver
+  gather_facts: false
+  become: False
+  roles:
+  - role: idm-sudo
+  tags: sudo
