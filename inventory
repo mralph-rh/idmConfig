@@ -1,12 +1,5 @@
 all:
   children:
-    win:
-      hosts:
-        winblog.example.com:
-          ansible_user: Administrator
-          ansible_password: "{{ admin_password }}"
-          ansible_connection: winrm
-          ansible_winrm_server_cert_validation: ignore
     ipaserver:
       hosts: 
         idm.web.example.com:
@@ -56,8 +49,12 @@ all:
               address: "{{ ansible_default_ipv4.address }}/24"
               gateway4: "{{ ansible_default_ipv4.gateway }}"   
   vars:
+## Global
+    admin_password: 'Redhat123!' # Admin password used for all applications
+    domain: "{{ shortname }}.{{ root_domain }}"
+    root_domain: 'example.com' # AD domain, usually the root of your IdM
+    shortname: "web"
 ## IPA Info
-    domain: "{{ idm_short }}.{{ ad_domain }}"
     ipaadmin_password: "{{ admin_password }}"
     ipadm_password: "{{ admin_password }}"
 ## IdM User Creation
@@ -70,28 +67,9 @@ all:
       - { idm_name: johnd_idm, idm_first: John, idm_last: Doe }
       - { idm_name: janed_idm, idm_first: Jane, idm_last: Doe }
 ## IdM Configuration
-    idm_short: "web"
     host_group: "ipaclients"
 ## AD Info
     ad_password: "{{ admin_password }}" # AD administrator password
-    ad_domain: 'example.com' # AD domain, usually the root of your IdM
     ad_ip: '192.168.1.5' # AD IP
-    ad_netbios: "EXAMPLE"
-    idm_pri: "idm.{{ domain }}"
-    idm_DNS1: '192.168.1.52' # primary IdM IP address
-### The below lines are not needed if you are only running a single IdM server.    
-    idm_rep: "rep.{{ domain }}"
-    idm_DNS2: '192.168.1.53' # replica IdM IP address
-## AD Enterprise User/Group Creation
-    ad_idm_admins: # AD enterprise admin name, needed for AD Trust creation
-      - { ad_name: johnd_ad, ad_first: John, ad_last: Doe }
-      - { ad_name: janed_ad, ad_first: Jane, ad_last: Doe }
     ad_grp_users: ad-idm-users
     ad_grp_admins: ad-idm-admins
-    ad_idm_users: # Test users
-      - { ad_name: aduser1, ad_first: AD, ad_last: User1 }
-      - { ad_name: aduser2, ad_first: AD, ad_last: User2 }
-      - { ad_name: aduser3, ad_first: AD, ad_last: User3 }
-    ad_idm_password: "Redhat123!"
-## Global Info
-    admin_password: '' # Admin password used for all applications

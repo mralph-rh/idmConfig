@@ -8,16 +8,16 @@
     description: "External group for AD Users"
     external: yes
     externalmember: 
-      - '{{ ad_grp_users }}@{{ ad_domain }}'
+      - '{{ ad_grp_users }}@{{ root_domain }}'
     state: present
 - name: Create External Group for AD admins group
   ipagroup:
     ipaadmin_password: "{{ admin_password }}"
-    name: ext-adusergrp
+    name: ext-adadmingrp
     description: "External group for AD Users"
     external: yes
     externalmember: 
-      - '{{ ad_grp_admins }}@{{ ad_domain }}'
+      - '{{ ad_grp_admins }}@{{ root_domain }}'
     state: present
 - name: Create Internal group for External AD users group
   ipagroup:
@@ -30,10 +30,10 @@
 - name: Create Internal group for External AD admins group
   ipagroup:
     ipaadmin_password: "{{ admin_password }}"
-    name: int-adusergrp
+    name: int-adextgrp
     description: "Internal group for External AD users  group"
     group:
-      - ext-adusergrp
+      - ext-adadmingrp
     state: present
 # Creates an IdM group for IdM Admins
 - name: Create IdM admins group
